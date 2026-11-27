@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tindahan Tracker · Inventory app (Demo)</title>
+<meta name="description" content="Demo inventory app for small stores, made by BlackGate. Sample only.">
+<meta name="theme-color" content="#0f766e">
+<meta property="og:title" content="Tindahan Tracker · Inventory app demo by BlackGate">
+<meta property="og:description" content="A sample stock tracker for sari-sari stores: add items, sell, restock and see low stock.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Cpath d='M16 26h32v22H16zM14 18h36l-2 8H16z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root{--bg:#f3f6f5;--card:#fff;--ink:#10201d;--muted:#5d6f6b;--line:#dfe7e5;--teal:#0f766e;--teal-2:#14b8a6;--soft:#e6f4f1;--warn:#b45309;--warn-bg:#fef3c7;--bad:#b91c1c;--bad-bg:#fee2e2;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,p{margin:0}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:6px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .demo-bar{background:#0b2e2a;color:#cfe9e4;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:#7ee8d8;font-weight:700}
+
+  .app{max-width:1100px;margin:0 auto;padding:16px}
+  .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 18px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .ic{width:40px;height:40px;border-radius:12px;background:var(--teal);display:grid;place-items:center;color:#fff;font-size:20px}
+  .brand h1{font-size:20px;font-weight:800;letter-spacing:-.01em}
+  .brand p{font-size:13px;color:var(--muted)}
+  .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 14px;border-radius:10px;font-weight:600}
+  .btn:hover{border-color:#b9c9c5}
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn.primary:hover{background:#0c5f59}
+
+  .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  @media(min-width:800px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .stat span{font-size:13px;color:var(--muted)}
+  .stat b{display:block;font-size:26px;letter-spacing:-.02em;margin-top:4px}
+  .stat.warn b{color:var(--warn)}
+  .stat.hl{background:var(--teal);border-color:var(--teal);color:#fff}
+  .stat.hl span{color:#bfece6}
+
+  .grid{display:grid;gap:16px}
+  @media(min-width:900px){.grid{grid-template-columns:1fr 300px;align-items:start}}
+  .grid>*{min-width:0}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
+  .panel-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .panel-head h2{font-size:16px}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .search{padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;min-width:0;width:200px;max-width:100%}
+  .chk{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+  .chk input{accent-color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;font-weight:600;padding:10px 16px;background:#f8fbfa}
+  td{padding:12px 16px;border-top:1px solid var(--line);vertical-align:middle}
+  td.num,th.num{text-align:right}
+  @media(max-width:639px){th,td{padding:10px 8px}th:first-child,td:first-child{padding-left:12px}.item .e{display:none}}
+  .item{display:flex;align-items:center;gap:10px}
+  .item .e{width:34px;height:34px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font-size:18px;flex:none}
+  .item b{display:block;font-weight:600}
+  .item small{color:var(--muted)}
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--teal)}
+  .pill.low{background:var(--warn-bg);color:var(--warn)}
+  .pill.out{background:var(--bad-bg);color:var(--bad)}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .stepper button{border:0;background:#fff;width:34px;height:34px;font-weight:800;font-size:16px;color:var(--ink)}
+  .stepper button:hover{background:var(--soft)}
+  .stepper b{min-width:38px;text-align:center}
+  .del{border:0;background:none;color:var(--muted);font-size:18px;width:32px;height:32px;border-radius:8px}
+  .del:hover{background:var(--bad-bg);color:var(--bad)}
+  .hide-sm{display:none}
+  @media(min-width:640px){.hide-sm{display:table-cell}}
+  .empty{padding:30px;text-align:center;color:var(--muted)}
+
+  form.add{padding:16px;display:grid;gap:10px}
+  form.add label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+  form.add input,form.add select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);background:#fff}
+  form.add input:focus,form.add select:focus{outline:none;border-color:var(--teal)}
+  .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  form.add input,form.add select{width:100%;min-width:0}
+  .err{color:var(--bad);font-size:13px;min-height:1em}
+  .log{padding:6px 16px 14px;display:grid;gap:8px;max-height:260px;overflow:auto}
+  .log div{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+  .log b{color:var(--ink);font-weight:600}
+  .foot{text-align:center;color:var(--muted);font-size:13px;padding:24px 0}
+  .foot a{color:var(--teal);font-weight:600}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo app</b> made by BlackGate. Data stays only in your browser. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="ic" aria-hidden="true">🏪</div><div><h1>Tindahan Tracker</h1><p>Stock and sales for your store</p></div></div>
+    <button class="btn" id="reset">↺ Reset demo data</button>
+  </header>
+
+  <section class="stats" aria-label="Summary">
+    <div class="stat hl"><span>Sales today</span><b id="st-sales">₱0</b></div>
+    <div class="stat"><span>Items</span><b id="st-items">0</b></div>
+    <div class="stat warn"><span>Low or out of stock</span><b id="st-low">0</b></div>
+    <div class="stat"><span>Stock value</span><b id="st-value">₱0</b></div>
+  </section>
+
+  <div class="grid">
+    <section class="panel" aria-labelledby="inv-title">
+      <div class="panel-head">
+        <h2 id="inv-title">Inventory</h2>
+        <div class="tools">
+          <label class="sr-only" for="q">Search items</label>
+          <input class="search" id="q" type="search" placeholder="Search items…">
+          <label class="chk"><input type="checkbox" id="lowonly"> Low stock only</label>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Item</th><th class="hide-sm">Status</th><th class="num hide-sm">Price</th><th class="num">Stock</th><th><span class="sr-only">Remove</span></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p style="padding:10px 16px 14px;font-size:13px;color:var(--muted)">Tip: press <b>−</b> when you sell one, <b>+</b> when you restock.</p>
+    </section>
+
+    <div style="display:grid;gap:16px">
+      <section class="panel" aria-labelledby="add-title">
+        <div class="panel-head"><h2 id="add-title">Add an item</h2></div>
+        <form class="add" id="add" novalidate>
+          <label>Item name<input name="name" required placeholder="e.g. Instant noodles"></label>
+          <div class="two">
+            <label>Price (₱)<input name="price" type="number" min="0" step="0.25" inputmode="decimal" required></label>
+            <label>Stock<input name="stock" type="number" min="0" step="1" inputmode="numeric" required></label>
+          </div>
+          <label>Category<select name="cat"><option>Snacks</option><option>Drinks</option><option>Canned goods</option><option>Toiletries</option><option>Others</option></select></label>
+          <p class="err" id="err" aria-live="polite"></p>
+          <button class="btn primary" type="submit" style="justify-content:center">+ Add item</button>
+        </form>
+      </section>
+      <section class="panel" aria-labelledby="log-title">
+        <div class="panel-head"><h2 id="log-title">Recent activity</h2></div>
+        <div class="log" id="log" aria-live="polite"></div>
+      </section>
+    </div>
+  </div>
+  <p class="foot">Tindahan Tracker is a demo · App by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></p>
+</div>
+
+<script>
+(function(){
+  var KEY='tindahan-demo-v1', LOW=5;
+  var icons={Snacks:'🍪',Drinks:'🥤','Canned goods':'🥫',Toiletries:'🧼',Others:'📦'};
+  var seed=function(){return {sales:0,log:[],items:[
+    {id:1,name:'Instant noodles',cat:'Snacks',price:15,stock:24},
+    {id:2,name:'Softdrink 1.5L',cat:'Drinks',price:75,stock:6},
+    {id:3,name:'Sardines',cat:'Canned goods',price:25,stock:3},
+    {id:4,name:'3-in-1 coffee',cat:'Drinks',price:10,stock:40},
+    {id:5,name:'Bar soap',cat:'Toiletries',price:35,stock:0},
+    {id:6,name:'Potato chips',cat:'Snacks',price:20,stock:12},
+    {id:7,name:'Corned beef',cat:'Canned goods',price:45,stock:8}]}};
+  var data;
+  try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  if(!data||!data.items)data=seed();
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+  var peso=function(n){return '₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:0,maximumFractionDigits:2})};
+  var esc=function(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML};
+  var rows=document.getElementById('rows'),q=document.getElementById('q'),lowonly=document.getElementById('lowonly');
+  function status(s){return s===0?'<span class="pill out">Out of stock</span>':s<=LOW?'<span class="pill low">Low</span>':'<span class="pill">OK</span>'}
+  function log(t){var now=new Date().toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'});data.log.unshift([t,now]);data.log=data.log.slice(0,30)}
+  function render(){
+    var term=q.value.trim().toLowerCase();
+    var list=data.items.filter(function(i){return (!term||i.name.toLowerCase().indexOf(term)>-1)&&(!lowonly.checked||i.stock<=LOW)});
+    rows.innerHTML=list.length?list.map(function(i){
+      var n=esc(i.name);
+      return '<tr><td><div class="item"><span class="e" aria-hidden="true">'+(icons[i.cat]||'📦')+'</span><div><b>'+n+'</b><small>'+esc(i.cat)+'</small></div></div></td><td class="hide-sm">'+status(i.stock)+'</td><td class="num hide-sm">'+peso(i.price)+'</td><td class="num"><span class="stepper"><button data-a="sell" data-id="'+i.id+'" aria-label="Sell one '+n+'">−</button><b>'+i.stock+'</b><button data-a="add" data-id="'+i.id+'" aria-label="Restock one '+n+'">+</button></span></td><td><button class="del" data-a="del" data-id="'+i.id+'" aria-label="Remove '+n+'">×</button></td></tr>';
+    }).join(''):'<tr><td colspan="5" class="empty">No items found.</td></tr>';
+    document.getElementById('st-sales').textContent=peso(data.sales);
+    document.getElementById('st-items').textContent=data.items.length;
+    document.getElementById('st-low').textContent=data.items.filter(function(i){return i.stock<=LOW}).length;
+    document.getElementById('st-value').textContent=peso(data.items.reduce(function(a,i){return a+i.price*i.stock},0));
+    document.getElementById('log').innerHTML=data.log.length?data.log.map(function(l){return '<div><span>'+l[0]+'</span><span>'+l[1]+'</span></div>'}).join(''):'<div><span>No activity yet. Try selling an item.</span></div>';
+  }
+  rows.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;var id=+b.dataset.id,it=data.items.find(function(i){return i.id===id});if(!it)return;
+    if(b.dataset.a==='sell'){if(it.stock>0){it.stock--;data.sales+=it.price;log('Sold 1 <b>'+esc(it.name)+'</b>')}}
+    else if(b.dataset.a==='add'){it.stock++;log('Restocked <b>'+esc(it.name)+'</b>')}
+    else if(b.dataset.a==='del'){data.items=data.items.filter(function(i){return i!==it});log('Removed <b>'+esc(it.name)+'</b>')}
+    save();render();
+    var again=rows.querySelector('[data-a="'+b.dataset.a+'"][data-id="'+id+'"]');if(again)again.focus();
+  });
+  q.addEventListener('input',render);lowonly.addEventListener('change',render);
+  var form=document.getElementById('add'),err=document.getElementById('err');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();var name=form.name.value.trim(),price=parseFloat(form.price.value),stock=parseInt(form.stock.value,10);
+    if(!name){err.textContent='Please enter an item name.';form.name.focus();return}
+    if(!(price>=0)){err.textContent='Please enter a valid price.';form.price.focus();return}
+    if(!(stock>=0)){err.textContent='Please enter the stock count.';form.stock.focus();return}
+    err.textContent='';
+    data.items.unshift({id:Date.now(),name:name,cat:form.cat.value,price:price,stock:stock});
+    log('Added <b>'+esc(name)+'</b>');save();form.reset();render();form.name.focus();
+  });
+  document.getElementById('reset').addEventListener('click',function(){data=seed();save();render()});
+  render();
+})();
+</script>
+</body>
+</html>

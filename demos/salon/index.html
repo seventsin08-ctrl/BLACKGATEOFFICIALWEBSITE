@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinag Salon &amp; Spa · Book online (Demo)</title>
+<meta name="description" content="Demo salon website with online booking, made by BlackGate. Sample only.">
+<meta name="theme-color" content="#2b1d24">
+<meta property="og:title" content="Sinag Salon & Spa · Booking demo by BlackGate">
+<meta property="og:description" content="A sample salon website where customers pick a service, date and time online.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%232b1d24'/%3E%3Ccircle cx='32' cy='32' r='12' fill='%23e7b8a8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#faf6f3;--ink:#2b1d24;--rose:#c98b7a;--blush:#f3dfd7;--sand:#efe6df;--muted:#7a6a70;--line:#e8dcd5;--white:#fff;
+    --serif:"Cormorant Garamond",Georgia,serif;--sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,p{margin:0}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  .demo-bar{background:var(--ink);color:#eadbd5;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:#f1c3b4;font-weight:600}
+
+  header .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{font:700 26px/1 var(--serif);letter-spacing:.02em;text-decoration:none}
+  .logo small{font:500 11px/1 var(--sans);letter-spacing:.3em;display:block;color:var(--muted);margin-top:4px}
+  .nav a.book{border:1px solid var(--ink);padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+  .nav a.book:hover{background:var(--ink);color:#fff}
+
+  .hero{display:grid;gap:24px;padding:24px 0 56px;align-items:center}
+  @media(min-width:860px){.hero{grid-template-columns:1fr 1fr;padding:40px 0 80px}}
+  .eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);font-weight:600}
+  .hero h1{font:600 clamp(44px,8vw,78px)/.98 var(--serif);margin-top:14px}
+  .hero h1 i{color:var(--rose)}
+  .hero p{color:var(--muted);font-size:17px;margin-top:18px;max-width:42ch}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:#fff;border:1px solid var(--ink);border-radius:999px;padding:14px 26px;font-weight:600;text-decoration:none;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.light{background:transparent;color:var(--ink)}
+  .hero .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .hero-art{position:relative;height:clamp(320px,52vw,500px)}
+  .arch{position:absolute;border-radius:999px 999px 24px 24px;overflow:hidden}
+  .arch.a1{inset:0 30% 0 0;background:linear-gradient(170deg,#e9c7ba,#c98b7a 70%,#8e5a4e)}
+  .arch.a2{right:0;bottom:0;width:42%;height:62%;background:linear-gradient(170deg,#efe6df,#d3c0b6)}
+  .arch.a1::after{content:"";position:absolute;left:18%;right:18%;top:22%;bottom:-10%;border-radius:999px 999px 0 0;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.45),transparent 60%)}
+  .badge{position:absolute;left:52%;top:12%;background:#fff;border-radius:18px;padding:12px 16px;box-shadow:0 20px 40px -20px rgba(43,29,36,.4);font-size:13px}
+  .badge b{display:block;font:700 22px/1 var(--serif)}
+
+  section.block{padding:64px 0;border-top:1px solid var(--line)}
+  .title{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:28px}
+  .title h2{font:600 clamp(34px,5vw,48px)/1.05 var(--serif)}
+  .title p{color:var(--muted);max-width:40ch}
+
+  /* booking */
+  .booking{display:grid;gap:22px}
+  @media(min-width:900px){.booking{grid-template-columns:1.3fr .9fr;align-items:start}}
+  .step-h{display:flex;align-items:center;gap:10px;font-weight:600;margin:0 0 12px}
+  .step-h span{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px}
+  fieldset{border:0;margin:0 0 26px;padding:0;min-width:0}
+  .booking>*{min-width:0}
+  legend{padding:0}
+  .services{display:grid;gap:10px}
+  @media(min-width:600px){.services{grid-template-columns:1fr 1fr}}
+  .svc{position:relative;display:flex;justify-content:space-between;gap:12px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .svc input{position:absolute;opacity:0}
+  .svc b{display:block;font-weight:600}
+  .svc small{color:var(--muted)}
+  .svc .p{font:700 20px/1 var(--serif);white-space:nowrap}
+  .svc:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink);background:#fffaf8}
+  .svc:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+  .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+  .day,.slot{border:1px solid var(--line);background:#fff;border-radius:14px;color:var(--ink)}
+  .day{flex:none;width:68px;padding:10px 0;text-align:center}
+  .day small{display:block;color:var(--muted);font-size:12px}
+  .day b{font:700 22px/1.1 var(--serif)}
+  .day[aria-pressed="true"],.slot[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .day[aria-pressed="true"] small{color:#d8c7c0}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(min-width:600px){.slots{grid-template-columns:repeat(5,1fr)}}
+  .slot{padding:10px 0;font-weight:500;font-size:14px}
+  .slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+  .field{display:grid;gap:6px;margin-bottom:12px;font-weight:500;font-size:14px}
+  .field input{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff}
+  .field input:focus{outline:none;border-color:var(--ink)}
+
+  .summary{background:var(--ink);color:#f3e7e2;border-radius:24px;padding:26px;position:sticky;top:16px}
+  .summary h3{font:600 28px/1.1 var(--serif);color:#fff}
+  .summary dl{margin:18px 0;display:grid;gap:12px}
+  .summary dt{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9b3ab}
+  .summary dd{margin:2px 0 0;font-weight:500;color:#fff}
+  .summary .tot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid rgba(255,255,255,.15);padding-top:14px;margin-bottom:16px}
+  .summary .tot b{font:700 30px/1 var(--serif);color:#fff}
+  .summary .btn{width:100%;background:#f1c3b4;color:var(--ink);border-color:#f1c3b4}
+  .err{color:#ffb4a6;font-size:13px;margin-top:10px;min-height:1em}
+
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(min-width:760px){.gallery{grid-template-columns:repeat(4,1fr)}}
+  .g{aspect-ratio:3/4;border-radius:999px 999px 18px 18px;display:flex;align-items:flex-end;padding:16px;color:#fff;font:600 20px/1.1 var(--serif)}
+  .g1{background:linear-gradient(180deg,#d9a796,#8e5a4e)}.g2{background:linear-gradient(180deg,#cdb9ae,#6d5a55)}.g3{background:linear-gradient(180deg,#e8c9a8,#a47652)}.g4{background:linear-gradient(180deg,#b9a3b0,#5b4553)}
+  footer{border-top:1px solid var(--line);padding:30px 16px 40px;text-align:center;color:var(--muted);font-size:14px}
+
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(43,29,36,.55);padding:16px;z-index:30}
+  .modal.show{display:grid}
+  .ticket{background:#fff;border-radius:26px;max-width:400px;width:100%;overflow:hidden;text-align:center}
+  .ticket .top{background:var(--blush);padding:26px}
+  .ticket h2{font:600 32px/1.05 var(--serif)}
+  .ticket .body{padding:22px 26px 26px;display:grid;gap:8px;font-size:14px}
+  .ticket .body div{display:flex;justify-content:space-between;gap:10px}
+  .ticket .body span{color:var(--muted)}
+  .ticket p.note{color:var(--muted);font-size:13px;margin-top:8px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo website</b> made by BlackGate. The salon is fictional and bookings are not real. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+
+<header><div class="wrap nav"><a class="logo" href="#top">Sinag<small>SALON &amp; SPA</small></a><a class="book" href="#book">Book now</a></div></header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Hair · Nails · Spa</p>
+      <h1>Your glow,<br><i>booked</i> in a minute.</h1>
+      <p>Choose your service, pick a time that fits you, and skip the waiting. We'll have your chair ready.</p>
+      <div class="actions"><a class="btn" href="#book">Book an appointment</a><a class="btn light" href="#look">See our work</a></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="arch a1"></div><div class="arch a2"></div>
+      <div class="badge"><b>9 AM – 8 PM</b>Open every day</div>
+    </div>
+  </div>
+
+  <section class="block" id="book">
+    <div class="wrap">
+      <div class="title"><h2>Book an appointment</h2><p>Pick a service, then a day and time. Pay at the salon.</p></div>
+      <div class="booking">
+        <form id="form" novalidate>
+          <fieldset>
+            <legend class="step-h"><span>1</span>Choose a service</legend>
+            <div class="services" id="services"></div>
+          </fieldset>
+          <fieldset>
+            <legend class="step-h"><span>2</span>Pick a day</legend>
+            <div class="days" id="days" role="group" aria-label="Day"></div>
+          </fieldset>
+          <fieldset>
+            <legend class="step-h"><span>3</span>Pick a time</legend>
+            <div class="slots" id="slots" role="group" aria-label="Time"></div>
+          </fieldset>
+          <fieldset>
+            <legend class="step-h"><span>4</span>Your details</legend>
+            <label class="field">Name<input name="name" autocomplete="name" required></label>
+            <label class="field">Messenger or email<input name="contact" required placeholder="So we can confirm"></label>
+          </fieldset>
+        </form>
+        <aside class="summary" aria-live="polite">
+          <h3>Your booking</h3>
+          <dl>
+            <div><dt>Service</dt><dd id="s-svc">Choose a service</dd></div>
+            <div><dt>When</dt><dd id="s-when">Pick a day and time</dd></div>
+            <div><dt>Duration</dt><dd id="s-dur">—</dd></div>
+          </dl>
+          <div class="tot"><span>Total</span><b id="s-tot">₱0</b></div>
+          <button class="btn" type="submit" form="form">Confirm booking</button>
+          <p class="err" id="err"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="look">
+    <div class="wrap">
+      <div class="title"><h2>The look</h2><p>A calm space, warm light and people who listen.</p></div>
+      <div class="gallery" aria-hidden="true"><div class="g g1">Color</div><div class="g g2">Cut &amp; style</div><div class="g g3">Nails</div><div class="g g4">Spa</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>© Sinag Salon &amp; Spa (demo) · Website by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="t-title">
+  <div class="ticket">
+    <div class="top"><p class="eyebrow">See you soon</p><h2 id="t-title">You're booked!</h2></div>
+    <div class="body" id="t-body"></div>
+    <div style="padding:0 26px 26px"><button class="btn" id="t-close" style="width:100%">Done</button><p class="note">On a real site, the owner gets this booking right away.</p></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svcs=[["Haircut & blow-dry","45 min",250],["Hair color","2 hrs",1200],["Rebond","3 hrs",1800],["Manicure & pedicure","1 hr",350],["Gel nails","1 hr",500],["Full body massage","1 hr",600]];
+  var peso=function(n){return '₱'+n.toLocaleString('en-PH')};
+  var box=document.getElementById('services');
+  box.innerHTML=svcs.map(function(s,i){return '<label class="svc"><input type="radio" name="svc" value="'+i+'"><span><b>'+s[0]+'</b><small>'+s[1]+'</small></span><span class="p">'+peso(s[2])+'</span></label>'}).join('');
+  var state={svc:null,day:null,time:null};
+  var days=document.getElementById('days'),d0=new Date();
+  for(var i=0;i<10;i++){var d=new Date(d0);d.setDate(d0.getDate()+i);
+    var b=document.createElement('button');b.type='button';b.className='day';b.setAttribute('aria-pressed','false');
+    b.dataset.label=d.toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric'});
+    b.innerHTML='<small>'+(i===0?'Today':d.toLocaleDateString('en-PH',{weekday:'short'}))+'</small><b>'+d.getDate()+'</b><small>'+d.toLocaleDateString('en-PH',{month:'short'})+'</small>';
+    b.setAttribute('aria-label',b.dataset.label);days.appendChild(b);}
+  var times=["9:00 AM","10:00 AM","11:00 AM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM"];
+  var slots=document.getElementById('slots');
+  function drawSlots(seed){
+    slots.innerHTML=times.map(function(t,i){var taken=((i*7+seed*3)%5===0);return '<button type="button" class="slot" aria-pressed="false" '+(taken?'disabled aria-label="'+t+', taken"':'')+'>'+t+'</button>'}).join('');
+  }
+  drawSlots(0);
+  function pick(group,btn){group.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false')});btn.setAttribute('aria-pressed','true')}
+  days.addEventListener('click',function(e){var b=e.target.closest('.day');if(!b)return;pick(days,b);state.day=b.dataset.label;state.time=null;drawSlots([].indexOf.call(days.children,b));sum()});
+  slots.addEventListener('click',function(e){var b=e.target.closest('.slot');if(!b||b.disabled)return;pick(slots,b);state.time=b.textContent;sum()});
+  box.addEventListener('change',function(e){state.svc=+e.target.value;sum()});
+  function sum(){
+    var s=state.svc!=null?svcs[state.svc]:null;
+    document.getElementById('s-svc').textContent=s?s[0]:'Choose a service';
+    document.getElementById('s-dur').textContent=s?s[1]:'—';
+    document.getElementById('s-tot').textContent=peso(s?s[2]:0);
+    document.getElementById('s-when').textContent=state.day?(state.day+(state.time?' · '+state.time:' · pick a time')):'Pick a day and time';
+  }
+  var form=document.getElementById('form'),err=document.getElementById('err'),modal=document.getElementById('modal');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(state.svc==null){err.textContent='Please choose a service.';return}
+    if(!state.day||!state.time){err.textContent='Please pick a day and time.';return}
+    if(!form.name.value.trim()){err.textContent='Please enter your name.';form.name.focus();return}
+    if(!form.contact.value.trim()){err.textContent='Please add your Messenger or email.';form.contact.focus();return}
+    err.textContent='';var s=svcs[state.svc];
+    document.getElementById('t-body').innerHTML='<div><span>Name</span><b></b></div><div><span>Service</span><b>'+s[0]+'</b></div><div><span>Date</span><b>'+state.day+'</b></div><div><span>Time</span><b>'+state.time+'</b></div><div><span>Total</span><b>'+peso(s[2])+'</b></div>';
+    document.querySelector('#t-body b').textContent=form.name.value.trim();
+    modal.classList.add('show');document.getElementById('t-close').focus();
+  });
+  document.getElementById('t-close').addEventListener('click',function(){modal.classList.remove('show')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')modal.classList.remove('show')});
+})();
+</script>
+</body>
+</html>
