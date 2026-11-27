@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lilim Private Pool Resort · Book your date (Demo)</title>
+<meta name="description" content="Demo private resort booking website, made by BlackGate. Sample only.">
+<meta name="theme-color" content="#0e5a54">
+<meta property="og:title" content="Lilim Private Pool Resort · Booking demo by BlackGate">
+<meta property="og:description" content="A sample resort website with a date calendar, day or overnight rates, add-ons and reservations.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230e5a54'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle'%3E🌴%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f4faf8;--ink:#0b2b28;--deep:#0e5a54;--sea:#16a39a;--aqua:#c9f1ec;--sun:#ffb547;--muted:#55706c;--line:#d6e9e5;--white:#fff;--bad:#b42318;
+    --serif:"DM Serif Display",Georgia,serif;--sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,p{margin:0}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer;color:inherit}
+  :focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:8px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  .demo-bar{background:#06221f;color:#cdeee9;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:var(--sun);font-weight:700}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(180deg,#0e5a54 0%,#128077 55%,#19b3a8 100%)}
+  .hero::before{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,#ffd27f,#ffb547 55%,transparent 70%);opacity:.85}
+  .waves{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:90px}
+  .nav{position:relative;display:flex;justify-content:space-between;align-items:center;height:70px}
+  .logo{font:400 26px/1 var(--serif);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .nav a.cta{background:#fff;color:var(--deep);padding:10px 18px;border-radius:999px;font-weight:700;text-decoration:none;font-size:14px}
+  .hero-in{position:relative;padding:30px 0 130px;max-width:640px}
+  .hero .kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
+  .hero h1{font:400 clamp(44px,8vw,80px)/1 var(--serif);margin-top:18px}
+  .hero p{font-size:18px;opacity:.9;margin-top:16px;max-width:44ch}
+  .hero .feat{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .hero .feat span{background:rgba(6,34,31,.28);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font-weight:800;text-decoration:none;background:var(--sun);color:#3b2400;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .hero .btn{margin-top:26px}
+
+  section{padding:56px 0}
+  .h2{font:400 clamp(32px,5vw,46px)/1.05 var(--serif)}
+  .sub{color:var(--muted);margin-top:8px}
+
+  /* rates */
+  .rates{display:grid;gap:12px;margin-top:22px}
+  @media(min-width:760px){.rates{grid-template-columns:repeat(3,1fr)}}
+  .rate{position:relative;display:block;background:#fff;border:2px solid var(--line);border-radius:20px;padding:20px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .rate input{position:absolute;opacity:0}
+  .rate .ic{font-size:26px}
+  .rate h3{font-size:18px;font-weight:800;margin-top:8px}
+  .rate .time{color:var(--muted);font-size:14px}
+  .rate .pr{font:400 30px/1 var(--serif);margin-top:12px;color:var(--deep)}
+  .rate .pr small{font:500 13px var(--sans);color:var(--muted)}
+  .rate:has(input:checked){border-color:var(--deep);box-shadow:0 0 0 3px var(--aqua)}
+  .rate:has(input:checked)::after{content:"✓";position:absolute;right:16px;top:16px;width:26px;height:26px;border-radius:50%;background:var(--deep);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+  .rate:has(input:focus-visible){outline:3px solid var(--sun);outline-offset:2px}
+
+  /* booking */
+  .book{display:grid;gap:18px;margin-top:22px}
+  @media(min-width:940px){.book{grid-template-columns:1.25fr .85fr;align-items:start}}
+  .book>*{min-width:0}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px}
+  .panel h3{font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .panel h3 b{width:24px;height:24px;border-radius:50%;background:var(--deep);color:#fff;display:grid;place-items:center;font-size:12px}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cal-head strong{font-size:17px}
+  .cal-head button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:18px}
+  .cal-head button:disabled{opacity:.35;cursor:not-allowed}
+  .dow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+  .dow span{font-size:12px;font-weight:700;color:var(--muted);padding:4px 0}
+  .days button{aspect-ratio:1;border:0;border-radius:12px;background:#f1f8f6;font-weight:700;font-size:14px;position:relative}
+  .days button:hover:not(:disabled){background:var(--aqua)}
+  .days button.wk{background:#fff7e8}
+  .days button:disabled{background:transparent;color:#b4c6c2;text-decoration:line-through;cursor:not-allowed}
+  .days button.past{text-decoration:none}
+  .days button[aria-pressed="true"]{background:var(--deep);color:#fff}
+  .days .blank{visibility:hidden}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:12px;color:var(--muted)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:5px}
+
+  .row2{display:grid;gap:14px;margin-top:14px}
+  @media(min-width:640px){.row2{grid-template-columns:1fr 1fr}}
+  .stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:14px;padding:8px 8px 8px 14px}
+  .stepper span{font-weight:600}
+  .stepper small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+  .stepper .ctl{display:flex;align-items:center;gap:8px}
+  .stepper button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;font-weight:800;font-size:16px}
+  .stepper output{min-width:24px;text-align:center;font-weight:800}
+  .addons{display:grid;gap:8px}
+  .addon{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer}
+  .addon input{accent-color:var(--deep);width:18px;height:18px}
+  .addon span{flex:1;font-weight:600}
+  .addon em{font-style:normal;color:var(--muted);font-size:14px}
+  .addon:has(input:checked){border-color:var(--deep);background:#f1f8f6}
+  .field{display:grid;gap:5px;font-weight:600;font-size:14px}
+  .field input{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+  .field input:focus{outline:none;border-color:var(--deep)}
+
+  .summary{background:var(--ink);color:#d7efeb;border-radius:22px;padding:22px;position:sticky;top:16px}
+  .summary h3{font:400 28px/1.1 var(--serif);color:#fff}
+  .summary .lines{display:grid;gap:9px;margin:16px 0;font-size:14px}
+  .summary .lines div{display:flex;justify-content:space-between;gap:10px}
+  .summary .lines span:last-child{color:#fff;font-weight:600;text-align:right}
+  .summary .tot{border-top:1px dashed rgba(255,255,255,.25);padding-top:14px;display:grid;gap:6px}
+  .summary .tot div{display:flex;justify-content:space-between;align-items:baseline}
+  .summary .tot .big{font:400 32px/1 var(--serif);color:#fff}
+  .summary .dp{color:var(--sun);font-weight:700}
+  .summary .btn{width:100%;margin-top:16px}
+  .err{color:#ffb4a8;font-size:13px;margin-top:10px;min-height:1em}
+
+  .amen{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
+  @media(min-width:760px){.amen{grid-template-columns:repeat(4,1fr)}}
+  .amen div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;font-weight:700}
+  .amen span{display:block;font-size:26px;margin-bottom:6px}
+  .amen small{display:block;color:var(--muted);font-weight:500}
+  .rules{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:14px;display:grid;gap:8px;color:var(--muted);font-size:14px}
+  .rules b{color:var(--ink)}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:20px 16px 40px}
+
+  .modal{position:fixed;inset:0;z-index:40;display:none;place-items:center;padding:16px;background:rgba(6,34,31,.6)}
+  .modal.show{display:grid}
+  .res{background:#fff;border-radius:26px;max-width:420px;width:100%;overflow:hidden}
+  .res .top{background:linear-gradient(135deg,var(--deep),var(--sea));color:#fff;padding:24px;text-align:center}
+  .res .top h2{font:400 32px/1.05 var(--serif)}
+  .res .code{display:inline-block;margin-top:10px;background:rgba(255,255,255,.18);padding:6px 14px;border-radius:999px;font-weight:800;letter-spacing:.12em}
+  .res .body{padding:20px 24px;display:grid;gap:8px;font-size:14px}
+  .res .body div{display:flex;justify-content:space-between;gap:10px}
+  .res .body span{color:var(--muted)}
+  .res .note{font-size:13px;color:var(--muted);text-align:center;padding:0 24px}
+  .res .btn{margin:16px 24px 24px;width:calc(100% - 48px)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo website</b> made by BlackGate. The resort is fictional and reservations are not real. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main"><a class="logo" href="#top"><span aria-hidden="true">🌴</span>Lilim</a><a class="cta" href="#book">Check dates</a></nav>
+    <div class="hero-in" id="top">
+      <span class="kicker">🏊 Private pool · exclusive to your group</span>
+      <h1>Your own pool for the whole barkada.</h1>
+      <p>Pick your date, choose day or overnight, and reserve in a minute. No walk-ins, no strangers, just your group.</p>
+      <div class="feat"><span>Up to 30 guests</span><span>Videoke &amp; grill</span><span>Air-con rooms</span></div>
+      <a class="btn" href="#book">Book your date →</a>
+    </div>
+  </div>
+  <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c120 30 240 30 360 0s240-30 360 0 240 30 360 0 240-30 360 0v50H0z" fill="#f4faf8"/></svg>
+</header>
+
+<main>
+  <section id="book">
+    <div class="wrap">
+      <h2 class="h2">Reserve the whole place</h2>
+      <p class="sub">Choose a rate, pick an open date, then tell us your group size.</p>
+
+      <form id="form" novalidate>
+        <fieldset style="border:0;padding:0;margin:0;min-width:0">
+          <legend class="sr-only">Rate</legend>
+          <div class="rates" id="rates"></div>
+        </fieldset>
+
+        <div class="book">
+          <div style="display:grid;gap:14px">
+            <div class="panel">
+              <h3><b>1</b>Pick a date</h3>
+              <div class="cal-head"><button type="button" id="prev" aria-label="Previous month">‹</button><strong id="month" aria-live="polite"></strong><button type="button" id="next" aria-label="Next month">›</button></div>
+              <div class="dow" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+              <div class="days" id="days" role="group" aria-label="Dates"></div>
+              <div class="legend"><span><i style="background:#f1f8f6"></i>Weekday</span><span><i style="background:#fff7e8"></i>Weekend (+₱1,000)</span><span><i style="background:#fff;border:1px solid #d6e9e5"></i><s>Booked</s></span></div>
+            </div>
+            <div class="panel">
+              <h3><b>2</b>Your group</h3>
+              <div class="stepper"><span>Guests<small>Rate covers up to 20. ₱150 per extra guest.</small></span><span class="ctl"><button type="button" data-g="-1" aria-label="Fewer guests">−</button><output id="guests" aria-live="polite">10</output><button type="button" data-g="1" aria-label="More guests">+</button></span></div>
+              <div class="row2">
+                <label class="field">Your name<input name="name" autocomplete="name" required></label>
+                <label class="field">Messenger or email<input name="contact" required placeholder="So we can confirm"></label>
+              </div>
+            </div>
+            <div class="panel">
+              <h3><b>3</b>Add-ons (optional)</h3>
+              <div class="addons" id="addons"></div>
+            </div>
+          </div>
+
+          <aside class="summary" aria-live="polite">
+            <h3>Your reservation</h3>
+            <div class="lines" id="lines"></div>
+            <div class="tot">
+              <div><span>Total</span><span class="big" id="total">₱0</span></div>
+              <div><span>50% down payment to confirm</span><span class="dp" id="dp">₱0</span></div>
+            </div>
+            <button class="btn" type="submit">Reserve this date</button>
+            <p class="err" id="err"></p>
+          </aside>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="amenities" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="h2">What's included</h2>
+      <div class="amen">
+        <div><span aria-hidden="true">🏊</span>Private pool<small>Adult &amp; kiddie</small></div>
+        <div><span aria-hidden="true">🛏️</span>2 air-con rooms<small>For overnight stays</small></div>
+        <div><span aria-hidden="true">🍳</span>Kitchen<small>Stove, ref, utensils</small></div>
+        <div><span aria-hidden="true">🅿️</span>Parking<small>Up to 6 cars</small></div>
+      </div>
+      <div class="rules"><b>House rules</b><span>• Check-in on time; late check-out is charged per hour.</span><span>• No glass near the pool. Lifeguard not on duty.</span><span>• Down payment is non-refundable but can be moved once.</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>© Lilim Private Pool Resort (demo) · Website by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="r-title">
+  <div class="res">
+    <div class="top"><h2 id="r-title">Date reserved!</h2><span class="code" id="r-code"></span></div>
+    <div class="body" id="r-body"></div>
+    <p class="note">On a real site, the owner gets this right away and sends GCash details for the down payment.</p>
+    <button class="btn" id="r-close">Done</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var RATES=[
+    {k:'day',ic:'☀️',n:'Day tour',t:'8:00 AM – 5:00 PM',p:6500},
+    {k:'night',ic:'🌙',n:'Overnight',t:'7:00 PM – 6:00 AM',p:7500},
+    {k:'full',ic:'🌴',n:'22 hours',t:'2:00 PM – 12:00 NN next day',p:11500}];
+  var ADDONS=[['Videoke',500],['Charcoal grill set',300],['Extra towels (10 pcs)',200],['Inflatable pool floaties',250]];
+  var WEEKEND=1000, EXTRA=150, BASE_GUESTS=20, MAX=30;
+  var peso=function(n){return '₱'+n.toLocaleString('en-PH')};
+  document.getElementById('rates').innerHTML=RATES.map(function(r,i){return '<label class="rate"><input type="radio" name="rate" value="'+i+'"'+(i===0?' checked':'')+'><span class="ic" aria-hidden="true">'+r.ic+'</span><h3>'+r.n+'</h3><p class="time">'+r.t+'</p><p class="pr">'+peso(r.p)+' <small>weekday</small></p></label>'}).join('');
+  document.getElementById('addons').innerHTML=ADDONS.map(function(a,i){return '<label class="addon"><input type="checkbox" name="addon" value="'+i+'"><span>'+a[0]+'</span><em>+'+peso(a[1])+'</em></label>'}).join('');
+
+  var today=new Date();today.setHours(0,0,0,0);
+  var view=new Date(today.getFullYear(),today.getMonth(),1), state={date:null,guests:10};
+  function booked(d){var n=d.getDate()+d.getMonth()*31;return n%7===3||n%11===5} // sample unavailable dates
+  var daysEl=document.getElementById('days');
+  function drawCal(){
+    document.getElementById('month').textContent=view.toLocaleDateString('en-PH',{month:'long',year:'numeric'});
+    document.getElementById('prev').disabled=view<=new Date(today.getFullYear(),today.getMonth(),1);
+    var first=view.getDay(),len=new Date(view.getFullYear(),view.getMonth()+1,0).getDate(),h='';
+    for(var i=0;i<first;i++)h+='<span class="blank"></span>';
+    for(var d=1;d<=len;d++){
+      var dt=new Date(view.getFullYear(),view.getMonth(),d),past=dt<today,bk=!past&&booked(dt),wk=dt.getDay()===0||dt.getDay()===6;
+      var sel=state.date&&dt.getTime()===state.date.getTime();
+      var lab=dt.toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric'})+(bk?', booked':past?', past':wk?', weekend':'');
+      h+='<button type="button" data-t="'+dt.getTime()+'" class="'+(wk?'wk ':'')+(past?'past':'')+'" '+(past||bk?'disabled ':'')+'aria-pressed="'+(sel?'true':'false')+'" aria-label="'+lab+'">'+d+'</button>';
+    }
+    daysEl.innerHTML=h;
+  }
+  document.getElementById('prev').addEventListener('click',function(){view.setMonth(view.getMonth()-1);drawCal()});
+  document.getElementById('next').addEventListener('click',function(){view.setMonth(view.getMonth()+1);drawCal()});
+  daysEl.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;state.date=new Date(+b.dataset.t);drawCal();calc();var again=daysEl.querySelector('[data-t="'+b.dataset.t+'"]');if(again)again.focus()});
+  var gOut=document.getElementById('guests');
+  document.querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){state.guests=Math.min(MAX,Math.max(1,state.guests+(+b.dataset.g)));gOut.textContent=state.guests;calc()})});
+  var form=document.getElementById('form');
+  form.addEventListener('change',calc);
+  function calc(){
+    var r=RATES[+form.rate.value],wk=state.date&&(state.date.getDay()===0||state.date.getDay()===6);
+    var extra=Math.max(0,state.guests-BASE_GUESTS)*EXTRA, add=0, h='';
+    h+='<div><span>'+r.n+'</span><span>'+peso(r.p)+'</span></div>';
+    h+='<div><span>Date</span><span>'+(state.date?state.date.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}):'Pick a date')+'</span></div>';
+    if(wk)h+='<div><span>Weekend rate</span><span>+'+peso(WEEKEND)+'</span></div>';
+    h+='<div><span>Guests</span><span>'+state.guests+(extra?' (+'+peso(extra)+')':'')+'</span></div>';
+    [].forEach.call(form.querySelectorAll('[name=addon]:checked'),function(c){var a=ADDONS[+c.value];add+=a[1];h+='<div><span>'+a[0]+'</span><span>+'+peso(a[1])+'</span></div>'});
+    var tot=r.p+(wk?WEEKEND:0)+extra+add;
+    document.getElementById('lines').innerHTML=h;
+    document.getElementById('total').textContent=peso(tot);
+    document.getElementById('dp').textContent=peso(Math.ceil(tot/2));
+    return {r:r,tot:tot};
+  }
+  drawCal();calc();
+
+  var err=document.getElementById('err'),modal=document.getElementById('modal');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!state.date){err.textContent='Please pick an open date.';daysEl.querySelector('button:not(:disabled)').focus();return}
+    if(!form.name.value.trim()){err.textContent='Please enter your name.';form.name.focus();return}
+    if(!form.contact.value.trim()){err.textContent='Please add your Messenger or email.';form.contact.focus();return}
+    err.textContent='';var c=calc();
+    document.getElementById('r-code').textContent='LIL-'+Math.random().toString(36).slice(2,7).toUpperCase();
+    var body=document.getElementById('r-body');body.innerHTML='';
+    [['Name',form.name.value.trim()],['Date',state.date.toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric'})],['Rate',c.r.n+' · '+c.r.t],['Guests',String(state.guests)],['Total',peso(c.tot)],['Down payment',peso(Math.ceil(c.tot/2))]].forEach(function(p){
+      var d=document.createElement('div'),s=document.createElement('span'),b=document.createElement('b');s.textContent=p[0];b.textContent=p[1];d.appendChild(s);d.appendChild(b);body.appendChild(d)});
+    modal.classList.add('show');document.getElementById('r-close').focus();
+  });
+  function close(){modal.classList.remove('show')}
+  document.getElementById('r-close').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+})();
+</script>
+</body>
+</html>

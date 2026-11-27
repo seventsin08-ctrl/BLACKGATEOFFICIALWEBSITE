@@ -223,7 +223,13 @@
   .shot-items i{display:block;height:5px;border-radius:3px;background:#e9774a;width:55%}
   .hint{font:11px/1.4 var(--mono);color:var(--dim);margin-top:10px;text-align:right}
   .demos{display:grid;gap:14px;margin-top:14px}
-  @media (min-width:760px){.demos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media (min-width:640px){.demos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:1000px){.demos{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .t-resort{background:linear-gradient(180deg,#0e5a54,#19b3a8);padding:10px;display:grid;align-content:space-between;color:#fff;overflow:hidden}
+  .t-resort b{font:400 15px/1.05 Georgia,serif;max-width:70%}
+  .t-resort::before{content:"";position:absolute;right:-18px;top:-18px;width:60px;height:60px;border-radius:50%;background:#ffb547;opacity:.9}
+  .t-resort .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:#fff;border-radius:6px;padding:5px;position:relative}
+  .t-resort .cal i{height:9px;border-radius:2px;background:#e6f4f1}.t-resort .cal i.on{background:#0e5a54}.t-resort .cal i.off{background:transparent}
   .demo{display:flex;flex-direction:column;padding:14px;text-decoration:none}
   .demo .thumb{border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;position:relative;filter:grayscale(1);transition:filter .5s}
   .demo:hover .thumb,.demo:focus-visible .thumb{filter:none}
@@ -542,6 +548,18 @@
             <span class="kind">Store · Inventory app</span>
             <h4>Tindahan Tracker</h4>
             <p>Track stock and sales, with low-stock alerts.</p>
+            <span class="go">Open demo<span class="sr-only"> (opens in a new tab)</span> <svg aria-hidden="true"><use href="#i-ext"/></svg></span>
+          </div>
+        </a>
+        <a class="card demo reveal" href="https://demo-lilim-resort-booking.onrender.com/" target="_blank" rel="noopener">
+          <div class="thumb t-resort" aria-hidden="true">
+            <b>Your own pool for the whole barkada.</b>
+            <div class="cal"><i></i><i></i><i class="off"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i class="off"></i><i></i></div>
+          </div>
+          <div class="meta">
+            <span class="kind">Resort · Date booking</span>
+            <h4>Lilim Private Pool Resort</h4>
+            <p>Pick a date and rate, add extras, see the down payment.</p>
             <span class="go">Open demo<span class="sr-only"> (opens in a new tab)</span> <svg aria-hidden="true"><use href="#i-ext"/></svg></span>
           </div>
         </a>
