@@ -222,6 +222,37 @@
   .shot-items div:nth-child(3)::before{background:linear-gradient(135deg,#f5c1b5,#e48a74)}
   .shot-items i{display:block;height:5px;border-radius:3px;background:#e9774a;width:55%}
   .hint{font:11px/1.4 var(--mono);color:var(--dim);margin-top:10px;text-align:right}
+  .demos{display:grid;gap:14px;margin-top:14px}
+  @media (min-width:760px){.demos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .demo{display:flex;flex-direction:column;padding:14px;text-decoration:none}
+  .demo .thumb{border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;position:relative;filter:grayscale(1);transition:filter .5s}
+  .demo:hover .thumb,.demo:focus-visible .thumb{filter:none}
+  .demo .meta{padding:16px 6px 6px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .demo .kind{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .demo h4{margin:0;font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .demo p{color:var(--muted);font-size:13px;margin:0}
+  .demo .go{margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500}
+  .demo .go svg{width:14px;height:14px;transition:transform .2s}
+  .demo:hover .go svg{transform:translate(2px,-2px)}
+  /* mini previews */
+  .t-bakery{background:#fff8ee;padding:10px;display:grid;gap:7px;grid-template-rows:auto 1fr auto}
+  .t-bakery .h{font:800 11px/1 Georgia,serif;color:#5b2e0e;display:flex;justify-content:space-between}
+  .t-bakery .h i{width:34px;height:10px;border-radius:9px;background:#5b2e0e}
+  .t-bakery .bh{min-height:0;padding:0;display:flex;align-items:center;gap:8px;overflow:visible}
+  .t-bakery .bh b{font:800 13px/1.1 Georgia,serif;color:#5b2e0e;flex:1}
+  .t-bakery .bh span{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd796,#e8792b);flex:none}
+  .t-bakery .row{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .t-bakery .row i{height:24px;border-radius:6px;background:#ffe3b8}.t-bakery .row i:nth-child(2){background:#fff0c2}.t-bakery .row i:nth-child(3){background:#e9d7ff}.t-bakery .row i:nth-child(4){background:#f3d2c7}
+  .t-salon{background:#faf6f3;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}
+  .t-salon b{font:600 15px/1.05 Georgia,serif;color:#2b1d24;align-self:center}
+  .t-salon b em{color:#c98b7a}
+  .t-salon span{height:88%;border-radius:999px 999px 8px 8px;background:linear-gradient(170deg,#e9c7ba,#c98b7a 70%,#8e5a4e)}
+  .t-inv{background:#f3f6f5;padding:9px;display:grid;gap:6px;grid-template-rows:auto auto 1fr}
+  .t-inv .s{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .t-inv .s i{height:20px;border-radius:5px;background:#fff;border:1px solid #dfe7e5}.t-inv .s i:first-child{background:#0f766e;border-color:#0f766e}
+  .t-inv .r{height:9px;border-radius:3px;background:#fff;border:1px solid #dfe7e5}
+  .t-inv .tb{background:#fff;border:1px solid #dfe7e5;border-radius:6px;display:grid;gap:5px;padding:6px;align-content:start}
+  .t-inv .tb i{height:6px;border-radius:3px;background:#e6f4f1}.t-inv .tb i:nth-child(2){background:#fef3c7}
 
   /* ============ pricing ============ */
   .pricing{overflow:hidden;isolation:isolate}
@@ -474,6 +505,46 @@
           </div>
           <p class="hint">hover to see it in color</p>
         </div>
+      </div>
+
+      <div class="demos">
+        <a class="card demo reveal" href="https://demo-tinapay-corner-bakery.onrender.com/" target="_blank" rel="noopener">
+          <div class="thumb t-bakery" aria-hidden="true">
+            <div class="h">Tinapay Corner<i></i></div>
+            <div class="bh"><b>Warm bread, ready when you are.</b><span></span></div>
+            <div class="row"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="meta">
+            <span class="kind">Bakery · Online ordering</span>
+            <h4>Tinapay Corner</h4>
+            <p>Menu, cart and checkout for pickup or delivery.</p>
+            <span class="go">Open demo<span class="sr-only"> (opens in a new tab)</span> <svg aria-hidden="true"><use href="#i-ext"/></svg></span>
+          </div>
+        </a>
+        <a class="card demo reveal" href="https://demo-sinag-salon-booking.onrender.com/" target="_blank" rel="noopener">
+          <div class="thumb t-salon" aria-hidden="true">
+            <b>Your glow, <em>booked</em> in a minute.</b><span></span>
+          </div>
+          <div class="meta">
+            <span class="kind">Salon · Booking system</span>
+            <h4>Sinag Salon &amp; Spa</h4>
+            <p>Customers pick a service, day and time online.</p>
+            <span class="go">Open demo<span class="sr-only"> (opens in a new tab)</span> <svg aria-hidden="true"><use href="#i-ext"/></svg></span>
+          </div>
+        </a>
+        <a class="card demo reveal" href="https://demo-tindahan-tracker-app.onrender.com/" target="_blank" rel="noopener">
+          <div class="thumb t-inv" aria-hidden="true">
+            <div class="s"><i></i><i></i><i></i></div>
+            <div class="r"></div>
+            <div class="tb"><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="meta">
+            <span class="kind">Store · Inventory app</span>
+            <h4>Tindahan Tracker</h4>
+            <p>Track stock and sales, with low-stock alerts.</p>
+            <span class="go">Open demo<span class="sr-only"> (opens in a new tab)</span> <svg aria-hidden="true"><use href="#i-ext"/></svg></span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
