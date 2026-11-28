@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labada Express · Laundry pickup &amp; delivery (Demo)</title>
+<meta name="description" content="Demo laundry shop website with price calculator, pickup booking and order tracking. Made by BlackGate. Sample only.">
+<meta name="theme-color" content="#1d4ed8">
+<meta property="og:title" content="Labada Express · Laundry shop demo by BlackGate">
+<meta property="og:description" content="A sample laundry website: compute your price, book a pickup and track your order.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231d4ed8'/%3E%3Ccircle cx='32' cy='35' r='14' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f3f7ff;--ink:#0c1a3a;--blue:#1d4ed8;--sky:#60a5fa;--soft:#dbeafe;--muted:#5b6b8c;--line:#d9e3f6;--ok:#16a34a;--sans:"Outfit",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,p{margin:0}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer;color:inherit}
+  :focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:8px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  .demo-bar{background:#0a1430;color:#cdd9f5;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:#93c5fd;font-weight:700}
+  header .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;text-decoration:none}
+  .logo i{width:38px;height:38px;border-radius:12px;background:var(--blue);display:grid;place-items:center;color:#fff;font-style:normal}
+  .nav nav{display:none;gap:22px;font-weight:600;font-size:15px}
+  .nav nav a{text-decoration:none}
+  @media(min-width:760px){.nav nav{display:flex}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 20px;font-weight:700;text-decoration:none;background:var(--blue);color:#fff;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-2px);background:#1e40af}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#1d4ed8,#3b82f6 60%,#60a5fa);color:#fff;border-radius:28px;padding:36px 26px;display:grid;gap:26px;margin-top:6px}
+  @media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr;padding:56px 48px;align-items:center}}
+  .bubbles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .bubbles span{position:absolute;border-radius:50%;background:rgba(255,255,255,.14);animation:rise 9s linear infinite}
+  @keyframes rise{from{transform:translateY(40px)}to{transform:translateY(-500px)}}
+  .hero h1{font-size:clamp(36px,6vw,58px);line-height:1.02;font-weight:800;letter-spacing:-.02em}
+  .hero p{opacity:.92;font-size:18px;margin-top:14px;max-width:42ch}
+  .hero .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .hero .acts .btn{background:#fff;color:var(--blue)}
+  .track{position:relative;background:#fff;color:var(--ink);border-radius:22px;padding:22px;box-shadow:0 30px 60px -30px rgba(10,20,48,.6)}
+  .track h2{font-size:20px}
+  .track p{color:var(--muted);font-size:14px;margin-top:4px}
+  .track form{display:flex;gap:8px;margin-top:14px}
+  .track input{flex:1;min-width:0;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px;text-transform:uppercase}
+  .track input:focus{outline:none;border-color:var(--blue)}
+  .steps{display:grid;gap:0;margin-top:16px}
+  .st{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:14px}
+  .st::before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--line)}
+  .st:last-child::before{display:none}
+  .st b{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:13px;background:var(--soft);color:var(--blue);position:relative;z-index:1}
+  .st.done b{background:var(--blue);color:#fff}
+  .st.now b{background:var(--ok);color:#fff;box-shadow:0 0 0 5px #dcfce7}
+  .st span{font-weight:600;font-size:15px}
+  .st small{display:block;color:var(--muted);font-weight:400}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px}
+
+  section{padding:54px 0 0}
+  .h2{font-size:clamp(28px,4.4vw,40px);font-weight:800;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:6px}
+  .prices{display:grid;gap:12px;margin-top:20px}
+  @media(min-width:760px){.prices{grid-template-columns:repeat(4,1fr)}}
+  .price{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+  .price .ic{font-size:28px}
+  .price h3{font-size:17px;margin-top:6px}
+  .price p{color:var(--muted);font-size:14px}
+  .price b{display:block;font-size:24px;color:var(--blue);margin-top:8px}
+
+  .calc{display:grid;gap:16px;margin-top:20px}
+  @media(min-width:900px){.calc{grid-template-columns:1.3fr .9fr;align-items:start}}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px}
+  .panel h3{font-size:16px;margin-bottom:12px}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+  .opt input{accent-color:var(--blue);width:18px;height:18px}
+  .opt span{flex:1;font-weight:600}
+  .opt small{display:block;color:var(--muted);font-weight:400}
+  .opt em{font-style:normal;color:var(--blue);font-weight:700}
+  .opt:has(input:checked){border-color:var(--blue);background:#f5f8ff}
+  .kg{margin-top:16px}
+  .kg label{display:flex;justify-content:space-between;font-weight:600}
+  .kg output{color:var(--blue);font-weight:800}
+  .kg input{width:100%;accent-color:var(--blue);margin-top:8px}
+  .row2{display:grid;gap:12px;margin-top:16px}
+  @media(min-width:600px){.row2{grid-template-columns:1fr 1fr}}
+  .field{display:grid;gap:5px;font-weight:600;font-size:14px}
+  .field input,.field select{font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--blue)}
+  .sum{background:var(--ink);color:#d7e2fb;border-radius:22px;padding:22px;position:sticky;top:16px}
+  .sum h3{color:#fff;font-size:20px}
+  .sum .lines{display:grid;gap:8px;margin:16px 0;font-size:14px}
+  .sum .lines div{display:flex;justify-content:space-between;gap:10px}
+  .sum .lines span:last-child{color:#fff;font-weight:600}
+  .sum .tot{border-top:1px dashed rgba(255,255,255,.25);padding-top:12px;display:flex;justify-content:space-between;align-items:baseline}
+  .sum .tot b{font-size:32px;color:#fff}
+  .sum .btn{width:100%;margin-top:16px;background:var(--sky);color:var(--ink)}
+  .sum .btn:hover{background:#93c5fd}
+  .err{color:#fca5a5;font-size:13px;margin-top:8px;min-height:1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:50px 16px 40px}
+  .modal{position:fixed;inset:0;z-index:40;display:none;place-items:center;background:rgba(10,20,48,.55);padding:16px}
+  .modal.show{display:grid}
+  .card{background:#fff;border-radius:24px;max-width:400px;width:100%;padding:26px;text-align:center}
+  .card .big{font-size:48px}
+  .card h2{font-size:26px;margin-top:4px}
+  .card .code{display:inline-block;margin:12px 0;background:var(--soft);color:var(--blue);font-weight:800;letter-spacing:.12em;padding:8px 16px;border-radius:12px;font-size:20px}
+  .card p{color:var(--muted);font-size:14px}
+  .card .btn{width:100%;margin-top:16px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo website</b> made by BlackGate. The shop is fictional and orders are not real. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+<header><div class="wrap nav"><a class="logo" href="#top"><i aria-hidden="true">🫧</i>Labada Express</a><nav aria-label="Main"><a href="#prices">Prices</a><a href="#book">Book pickup</a><a href="#track">Track order</a></nav><a class="btn" href="#book">Book pickup</a></div></header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <div class="bubbles" aria-hidden="true"><span style="width:60px;height:60px;left:8%;bottom:-60px"></span><span style="width:26px;height:26px;left:30%;bottom:-40px;animation-delay:-3s"></span><span style="width:44px;height:44px;left:55%;bottom:-50px;animation-delay:-6s"></span><span style="width:18px;height:18px;left:80%;bottom:-30px;animation-delay:-1s"></span></div>
+    <div style="position:relative">
+      <h1>Fresh, folded and delivered.</h1>
+      <p>Wash, dry and fold for ₱35 per kilo. We pick up your laundry and bring it back the next day.</p>
+      <div class="acts"><a class="btn" href="#book">Compute &amp; book</a><a class="btn ghost" href="#prices" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.5)">See prices</a></div>
+    </div>
+    <div class="track" id="track">
+      <h2>Track your order</h2>
+      <p>Enter your order code. Try <b>LBD-1024</b>.</p>
+      <form id="tform"><label class="sr-only" for="code" style="position:absolute;left:-9999px">Order code</label><input id="code" placeholder="LBD-0000" autocomplete="off"><button class="btn" type="submit">Track</button></form>
+      <div id="tout" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <section id="prices">
+    <h2 class="h2">Simple prices</h2>
+    <p class="sub">Minimum of 3 kilos per load. Fabric softener included.</p>
+    <div class="prices">
+      <div class="price"><div class="ic" aria-hidden="true">🧺</div><h3>Wash, dry &amp; fold</h3><p>Everyday clothes</p><b>₱35/kg</b></div>
+      <div class="price"><div class="ic" aria-hidden="true">👔</div><h3>Wash, dry &amp; press</h3><p>Uniforms and office wear</p><b>₱55/kg</b></div>
+      <div class="price"><div class="ic" aria-hidden="true">🛏️</div><h3>Comforter</h3><p>Per piece, any size</p><b>₱180</b></div>
+      <div class="price"><div class="ic" aria-hidden="true">🛵</div><h3>Pickup &amp; delivery</h3><p>Free for 8 kg and up</p><b>₱50</b></div>
+    </div>
+  </section>
+
+  <section id="book">
+    <h2 class="h2">Compute and book a pickup</h2>
+    <p class="sub">Your total updates as you choose.</p>
+    <form id="bform" novalidate>
+      <div class="calc">
+        <div style="display:grid;gap:14px">
+          <div class="panel">
+            <h3>1 · Service</h3>
+            <div class="opts" role="radiogroup" aria-label="Service">
+              <label class="opt"><input type="radio" name="svc" value="fold" checked><span>Wash, dry &amp; fold<small>Ready next day</small></span><em>₱35/kg</em></label>
+              <label class="opt"><input type="radio" name="svc" value="press"><span>Wash, dry &amp; press<small>Ready in 2 days</small></span><em>₱55/kg</em></label>
+            </div>
+            <div class="kg"><label for="kg">Estimated weight <output id="kgout">6 kg</output></label><input id="kg" type="range" min="3" max="20" value="6"></div>
+            <div class="row2">
+              <label class="field">Comforters<select name="comf"><option value="0">None</option><option value="1">1 piece</option><option value="2">2 pieces</option><option value="3">3 pieces</option></select></label>
+              <label class="field">Delivery<select name="del"><option value="pd">Pickup &amp; delivery</option><option value="walk">I'll drop off &amp; pick up</option></select></label>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>2 · Pickup details</h3>
+            <div class="row2" style="margin-top:0">
+              <label class="field">Your name<input name="name" autocomplete="name" required></label>
+              <label class="field">Pickup day<select name="day" id="day"></select></label>
+            </div>
+            <div class="row2">
+              <label class="field">Address or landmark<input name="addr" autocomplete="street-address" placeholder="e.g. Blue gate beside the chapel"></label>
+              <label class="field">Time<select name="time"><option>8:00 – 10:00 AM</option><option>10:00 AM – 12:00 NN</option><option>1:00 – 3:00 PM</option><option>3:00 – 5:00 PM</option></select></label>
+            </div>
+          </div>
+        </div>
+        <aside class="sum" aria-live="polite">
+          <h3>Your estimate</h3>
+          <div class="lines" id="lines"></div>
+          <div class="tot"><span>Estimated total</span><b id="tot">₱0</b></div>
+          <p style="font-size:12px;margin-top:6px;opacity:.75">Final price is based on the actual weight at the shop.</p>
+          <button class="btn" type="submit">Book pickup</button>
+          <p class="err" id="err"></p>
+        </aside>
+      </div>
+    </form>
+  </section>
+</main>
+<footer>© Labada Express (demo) · Website by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="card"><div class="big" aria-hidden="true">🧺</div><h2 id="m-title">Pickup booked!</h2><span class="code" id="m-code"></span><p id="m-text"></p><p style="margin-top:8px">Use this code above to track your laundry. On a real site, the shop gets your booking right away.</p><button class="btn" id="m-close">Done</button></div>
+</div>
+
+<script>
+(function(){
+  var peso=function(n){return '₱'+n.toLocaleString('en-PH')};
+  var STAGES=['Pickup scheduled','Picked up','Washing','Drying & folding','Out for delivery','Delivered'];
+  var orders={'LBD-1024':{stage:3,name:'Sample order'}};
+  try{var saved=JSON.parse(localStorage.getItem('labada-demo')||'{}');for(var k in saved)orders[k]=saved[k]}catch(e){}
+  function save(){try{var o={};for(var k in orders)if(k!=='LBD-1024')o[k]=orders[k];localStorage.setItem('labada-demo',JSON.stringify(o))}catch(e){}}
+  var day=document.getElementById('day'),d0=new Date();
+  for(var i=0;i<5;i++){var d=new Date(d0);d.setDate(d0.getDate()+i);var o=document.createElement('option');o.textContent=(i===0?'Today, ':i===1?'Tomorrow, ':'')+d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});day.appendChild(o)}
+  var f=document.getElementById('bform'),kg=document.getElementById('kg');
+  function calc(){
+    var k=+kg.value,rate=f.svc.value==='press'?55:35,comf=+f.comf.value,pd=f.del.value==='pd',fee=pd&&k<8?50:0,t=k*rate+comf*180+fee;
+    document.getElementById('kgout').textContent=k+' kg';
+    var h='<div><span>'+(f.svc.value==='press'?'Wash, dry & press':'Wash, dry & fold')+' · '+k+' kg</span><span>'+peso(k*rate)+'</span></div>';
+    if(comf)h+='<div><span>Comforter × '+comf+'</span><span>'+peso(comf*180)+'</span></div>';
+    h+='<div><span>'+(pd?'Pickup & delivery':'Drop off')+'</span><span>'+(pd?(fee?peso(fee):'Free'):'—')+'</span></div>';
+    document.getElementById('lines').innerHTML=h;document.getElementById('tot').textContent=peso(t);return t;
+  }
+  f.addEventListener('input',calc);f.addEventListener('change',calc);calc();
+  var err=document.getElementById('err'),modal=document.getElementById('modal');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!f.name.value.trim()){err.textContent='Please enter your name.';f.name.focus();return}
+    if(f.del.value==='pd'&&!f.addr.value.trim()){err.textContent='Please add your address or a landmark.';f.addr.focus();return}
+    err.textContent='';var code='LBD-'+(1100+Math.floor(Math.random()*8900));
+    orders[code]={stage:0,name:f.name.value.trim()};save();
+    document.getElementById('m-code').textContent=code;
+    document.getElementById('m-text').textContent=f.day.value+' · '+f.time.value+' · estimate '+peso(calc());
+    modal.classList.add('show');document.getElementById('m-close').focus();
+  });
+  document.getElementById('m-close').addEventListener('click',function(){modal.classList.remove('show');document.getElementById('code').value=document.getElementById('m-code').textContent;show(document.getElementById('m-code').textContent);document.getElementById('track').scrollIntoView({behavior:'smooth'})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')modal.classList.remove('show')});
+  var tout=document.getElementById('tout');
+  function show(c){
+    c=c.trim().toUpperCase();var o=orders[c];
+    if(!o){tout.innerHTML='<p class="hint" style="color:#b91c1c;margin-top:12px">We can\'t find that code. Try LBD-1024.</p>';return}
+    tout.innerHTML='<div class="steps">'+STAGES.map(function(s,i){return '<div class="st '+(i<o.stage?'done':i===o.stage?'now':'')+'"><b>'+(i<o.stage?'✓':i+1)+'</b><span>'+s+(i===o.stage?'<small>Current status</small>':'')+'</span></div>'}).join('')+'</div>';
+  }
+  document.getElementById('tform').addEventListener('submit',function(e){e.preventDefault();show(document.getElementById('code').value)});
+})();
+</script>
+</body>
+</html>

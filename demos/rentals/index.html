@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahanan Rentals · Apartments and houses for rent (Demo)</title>
+<meta name="description" content="Demo rental listings website with filters, unit details and viewing schedules. Made by BlackGate. Sample only.">
+<meta name="theme-color" content="#9a3412">
+<meta property="og:title" content="Tahanan Rentals · Rental listings demo by BlackGate">
+<meta property="og:description" content="A sample rentals website: filter units by type, area and budget, save favorites and book a viewing.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%239a3412'/%3E%3Cpath d='M14 32 32 16l18 16v18H14z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fbf7f2;--ink:#2a1a12;--clay:#9a3412;--clay-2:#c2410c;--sand:#f3e8dc;--muted:#7a6558;--line:#eadfd2;--serif:"Fraunces",Georgia,serif;--sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,p{margin:0}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer;color:inherit}
+  :focus-visible{outline:3px solid #fb923c;outline-offset:2px;border-radius:8px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+  .demo-bar{background:#1f120b;color:#f0dccb;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:#fdba74;font-weight:700}
+  header .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{font:700 24px/1 var(--serif);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .fav-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-weight:600}
+  .fav-btn b{background:var(--clay);color:#fff;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px}
+  .fav-btn[aria-pressed="true"]{background:var(--clay);color:#fff;border-color:var(--clay)}
+  .fav-btn[aria-pressed="true"] b{background:#fff;color:var(--clay)}
+
+  .hero{border-radius:28px;overflow:hidden;position:relative;color:#fff;padding:40px 24px 28px;
+    background:linear-gradient(180deg,rgba(42,26,18,.15),rgba(42,26,18,.65)),linear-gradient(135deg,#f6a66b,#c2410c 50%,#7c2d12)}
+  .hero::before{content:"";position:absolute;right:-60px;top:-40px;width:420px;height:320px;background:
+    linear-gradient(#fff3,#fff3) 40px 120px/110px 200px no-repeat,linear-gradient(#fff2,#fff2) 170px 60px/130px 260px no-repeat,linear-gradient(#fff3,#fff3) 320px 140px/90px 180px no-repeat;opacity:.6}
+  .hero h1{position:relative;font:700 clamp(36px,6.4vw,64px)/1.02 var(--serif);max-width:15ch}
+  .hero p{position:relative;font-size:18px;opacity:.92;margin-top:12px;max-width:44ch}
+  .filters{position:relative;margin-top:24px;background:#fff;color:var(--ink);border-radius:20px;padding:12px;display:grid;gap:10px;grid-template-columns:1fr 1fr;box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
+  @media(min-width:860px){.filters{grid-template-columns:1.4fr 1fr 1fr 1.2fr auto;align-items:end}}
+  .f{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+  .f input,.f select{font:15px var(--sans);color:var(--ink);padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:0;width:100%}
+  .f input[type=range]{padding:0;border:0;accent-color:var(--clay);height:40px}
+  .f output{color:var(--clay);font-weight:700}
+  .f.wide{grid-column:1/-1}
+  @media(min-width:860px){.f.wide{grid-column:auto}}
+  .reset{border:0;background:var(--sand);border-radius:12px;padding:11px 14px;font-weight:600}
+
+  .bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:28px 0 14px}
+  .bar h2{font:700 26px/1.1 var(--serif)}
+  .bar .count{color:var(--muted)}
+  .bar select{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+  .unit{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+  .unit:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(42,26,18,.45)}
+  .pic{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .pic .room{position:absolute;inset:0}
+  .pic .room::before{content:"";position:absolute;left:12%;right:12%;bottom:0;height:30%;background:rgba(0,0,0,.08);border-radius:8px 8px 0 0}
+  .pic .room::after{content:"";position:absolute;left:58%;top:16%;width:26%;height:34%;background:linear-gradient(#cfe8ff,#eaf5ff);border:4px solid #fff;border-radius:6px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+  .pic .badge{position:absolute;left:10px;top:10px;background:#fff;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+  .heart{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;display:grid;place-items:center;font-size:17px;box-shadow:0 6px 14px -6px rgba(0,0,0,.3)}
+  .heart[aria-pressed="true"]{background:var(--clay);color:#fff}
+  .u-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .u-body .pr{font:700 22px/1 var(--serif)}
+  .u-body .pr small{font:500 13px var(--sans);color:var(--muted)}
+  .u-body h3{font-size:15px;font-weight:600}
+  .u-body .loc{color:var(--muted);font-size:13px}
+  .specs{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .specs span{background:var(--sand);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:500}
+  .u-body .btn{margin-top:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:11px 16px;font-weight:700;background:var(--ink);color:#fff;text-decoration:none}
+  .btn:hover{background:var(--clay)}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px;background:#fff;border:1px dashed var(--line);border-radius:22px}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:50px 16px 40px}
+
+  dialog{border:0;padding:0;border-radius:26px;max-width:640px;width:calc(100% - 24px);color:var(--ink);background:#fff}
+  dialog::backdrop{background:rgba(31,18,11,.6)}
+  .d-pic{aspect-ratio:16/8;position:relative}
+  .d-body{padding:20px 22px 22px;display:grid;gap:12px}
+  .d-body h2{font:700 26px/1.1 var(--serif)}
+  .d-body .pr{font:700 22px var(--serif);color:var(--clay)}
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px;color:var(--muted)}
+  .vform{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+  .vform h3{font-size:16px}
+  .row2{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .vform label{display:grid;gap:4px;font-size:13px;font-weight:600}
+  .vform input,.vform select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+  .err{color:#b91c1c;font-size:13px;min-height:1em}
+  .x{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;font-size:20px;z-index:2}
+  .ok{text-align:center;padding:10px 0}
+  .ok b{display:block;font:700 22px var(--serif)}
+  .ok p{color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo website</b> made by BlackGate. The listings are fictional and viewings are not real. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+<header><div class="wrap nav"><a class="logo" href="#top"><span aria-hidden="true">🏡</span>Tahanan</a><button class="fav-btn" id="favs" aria-pressed="false">♥ Saved <b id="favcount">0</b></button></div></header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <h1>Find your next home, without the hassle.</h1>
+    <p>Studios, apartments and houses for rent. Owner-verified, with real photos and fair monthly rates.</p>
+    <form class="filters" id="filters" role="search" aria-label="Filter rentals">
+      <label class="f wide">Search<input type="search" name="q" placeholder="e.g. near school, parking"></label>
+      <label class="f">Type<select name="type"><option value="">Any type</option><option>Studio</option><option>1 Bedroom</option><option>2 Bedroom</option><option>House</option></select></label>
+      <label class="f">Area<select name="area"><option value="">Any area</option><option>Poblacion</option><option>San Isidro</option><option>Riverside</option></select></label>
+      <label class="f wide">Max budget <output id="bout">₱25,000</output><input type="range" name="max" min="4000" max="25000" step="500" value="25000"></label>
+      <button type="reset" class="reset">Clear</button>
+    </form>
+  </div>
+
+  <div class="bar"><div><h2 id="list-title">Available units</h2><span class="count" id="count" aria-live="polite"></span></div>
+    <label>Sort <select id="sort"><option value="new">Newest</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></label></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>© Tahanan Rentals (demo) · Website by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></footer>
+
+<dialog id="dlg" aria-labelledby="d-title"></dialog>
+
+<script>
+(function(){
+  var U=[
+    {id:1,t:'Cozy studio near the market',ty:'Studio',a:'Poblacion',p:6500,b:0,ba:1,s:22,tags:['Wi-Fi ready','Water incl.'],c:['#fde2c8','#f7b98a']},
+    {id:2,t:'Bright 1-bedroom with balcony',ty:'1 Bedroom',a:'San Isidro',p:9500,b:1,ba:1,s:34,tags:['Balcony','Pet-friendly'],c:['#e7e5ff','#b4b0f5']},
+    {id:3,t:'Family house with garage',ty:'House',a:'Riverside',p:18000,b:3,ba:2,s:110,tags:['Parking','Garden'],c:['#dcfce7','#9fe0b3']},
+    {id:4,t:'Budget studio for students',ty:'Studio',a:'San Isidro',p:4500,b:0,ba:1,s:16,tags:['Near school','Bed incl.'],c:['#fff1c2','#f5d36b']},
+    {id:5,t:'2-bedroom unit, 2nd floor',ty:'2 Bedroom',a:'Poblacion',p:13500,b:2,ba:1,s:52,tags:['Parking','Water incl.'],c:['#dbeafe','#9cc3f5']},
+    {id:6,t:'Furnished 1-bedroom',ty:'1 Bedroom',a:'Riverside',p:11000,b:1,ba:1,s:30,tags:['Furnished','Wi-Fi ready'],c:['#fce7f3','#f2a9cf']},
+    {id:7,t:'Townhouse near the highway',ty:'House',a:'San Isidro',p:22000,b:3,ba:3,s:96,tags:['Parking','Pet-friendly'],c:['#ede3d6','#cdb497']},
+    {id:8,t:'Quiet 2-bedroom by the river',ty:'2 Bedroom',a:'Riverside',p:12000,b:2,ba:1,s:48,tags:['Garden','Near school'],c:['#ccfbf1','#7fdcca']},
+    {id:9,t:'Studio with loft bed',ty:'Studio',a:'Poblacion',p:7500,b:0,ba:1,s:24,tags:['Furnished','Near market'],c:['#fee2e2','#f6a8a8']}
+  ];
+  var peso=function(n){return '₱'+n.toLocaleString('en-PH')};
+  var favs=[];try{favs=JSON.parse(localStorage.getItem('tahanan-favs')||'[]')}catch(e){}
+  function saveF(){try{localStorage.setItem('tahanan-favs',JSON.stringify(favs))}catch(e){}document.getElementById('favcount').textContent=favs.length}
+  var f=document.getElementById('filters'),grid=document.getElementById('grid'),sort=document.getElementById('sort'),favOnly=false;
+  function pic(u){return '<div class="room" style="background:linear-gradient(160deg,'+u.c[0]+','+u.c[1]+')"></div>'}
+  function render(){
+    var q=f.q.value.trim().toLowerCase(),max=+f.max.value;
+    document.getElementById('bout').textContent=peso(max);
+    var list=U.filter(function(u){return (!f.type.value||u.ty===f.type.value)&&(!f.area.value||u.a===f.area.value)&&u.p<=max&&(!favOnly||favs.indexOf(u.id)>-1)&&(!q||(u.t+' '+u.tags.join(' ')+' '+u.a).toLowerCase().indexOf(q)>-1)});
+    if(sort.value==='low')list.sort(function(a,b){return a.p-b.p});else if(sort.value==='high')list.sort(function(a,b){return b.p-a.p});
+    document.getElementById('count').textContent=list.length+' of '+U.length+' units';
+    document.getElementById('list-title').textContent=favOnly?'Saved units':'Available units';
+    grid.innerHTML=list.length?list.map(function(u){var fv=favs.indexOf(u.id)>-1;
+      return '<article class="unit"><div class="pic">'+pic(u)+'<span class="badge">'+u.ty+'</span><button class="heart" data-fav="'+u.id+'" aria-pressed="'+fv+'" aria-label="'+(fv?'Remove from saved':'Save')+': '+u.t+'">♥</button></div><div class="u-body"><p class="pr">'+peso(u.p)+' <small>/ month</small></p><h3>'+u.t+'</h3><p class="loc">📍 '+u.a+'</p><div class="specs"><span>'+(u.b?u.b+' bed':'Studio')+'</span><span>'+u.ba+' bath</span><span>'+u.s+' sqm</span></div><button class="btn" data-open="'+u.id+'">View &amp; schedule</button></div></article>'}).join('')
+      :'<div class="empty">No units match. Try a higher budget or clear the filters.</div>';
+  }
+  f.addEventListener('input',render);f.addEventListener('reset',function(){setTimeout(render)});sort.addEventListener('change',render);
+  var fb=document.getElementById('favs');fb.addEventListener('click',function(){favOnly=!favOnly;fb.setAttribute('aria-pressed',favOnly);render()});
+  var dlg=document.getElementById('dlg'),opener=null;
+  grid.addEventListener('click',function(e){
+    var h=e.target.closest('[data-fav]');if(h){var id=+h.dataset.fav,i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);saveF();render();var again=grid.querySelector('[data-fav="'+id+'"]');if(again)again.focus();return}
+    var o=e.target.closest('[data-open]');if(o){opener=o;openUnit(U.find(function(u){return u.id===+o.dataset.open}))}
+  });
+  function openUnit(u){
+    var d0=new Date(),opts='';for(var i=1;i<8;i++){var d=new Date(d0);d.setDate(d0.getDate()+i);opts+='<option>'+d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'})+'</option>'}
+    dlg.innerHTML='<button class="x" aria-label="Close">×</button><div class="d-pic">'+pic(u)+'</div><div class="d-body"><h2 id="d-title"></h2><p class="pr">'+peso(u.p)+' / month</p>'+
+      '<div class="feat"><span>🛏️ '+(u.b?u.b+' bedroom'+(u.b>1?'s':''):'Studio')+'</span><span>🛁 '+u.ba+' bathroom'+(u.ba>1?'s':'')+'</span><span>📐 '+u.s+' sqm</span><span>📍 '+u.a+'</span>'+u.tags.map(function(t){return '<span>✓ '+t+'</span>'}).join('')+'<span>💳 1 month advance, 1 month deposit</span></div>'+
+      '<form class="vform" novalidate><h3>Schedule a viewing</h3><div class="row2"><label>Your name<input name="n" autocomplete="name"></label><label>Messenger or email<input name="c"></label></div><div class="row2"><label>Day<select name="d">'+opts+'</select></label><label>Time<select name="t"><option>9:00 AM</option><option>11:00 AM</option><option>2:00 PM</option><option>4:00 PM</option></select></label></div><p class="err" aria-live="polite"></p><button class="btn" type="submit">Request viewing</button></form></div>';
+    dlg.querySelector('#d-title').textContent=u.t;
+    dlg.querySelector('.x').addEventListener('click',function(){dlg.close()});
+    var vf=dlg.querySelector('.vform');
+    vf.addEventListener('submit',function(e){e.preventDefault();var er=vf.querySelector('.err');
+      if(!vf.n.value.trim()){er.textContent='Please enter your name.';vf.n.focus();return}
+      if(!vf.c.value.trim()){er.textContent='Please add your Messenger or email.';vf.c.focus();return}
+      var ok=document.createElement('div');ok.className='ok';ok.setAttribute('role','status');ok.innerHTML='<b>Viewing requested! 🏡</b><p></p><p style="font-size:13px;margin-top:6px">On a real site, the owner gets this and confirms with you.</p>';
+      ok.querySelector('p').textContent=vf.d.value+' at '+vf.t.value+' · '+u.t;vf.replaceWith(ok)});
+    dlg.showModal();dlg.querySelector('.x').focus();
+  }
+  dlg.addEventListener('close',function(){if(opener)opener.focus()});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+  saveF();render();
+})();
+</script>
+</body>
+</html>

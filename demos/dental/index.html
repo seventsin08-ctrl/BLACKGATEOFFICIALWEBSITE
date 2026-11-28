@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ngiti Dental Clinic · Book an appointment (Demo)</title>
+<meta name="description" content="Demo dental clinic website with dentist schedules and online appointments. Made by BlackGate. Sample only.">
+<meta name="theme-color" content="#0f766e">
+<meta property="og:title" content="Ngiti Dental Clinic · Clinic booking demo by BlackGate">
+<meta property="og:description" content="A sample clinic website: services, dentists, schedules and online appointments.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f766e'/%3E%3Cpath d='M20 18c5-3 9 0 12 0s7-3 12 0c5 3 3 12 1 17-2 6-3 13-6 13-3 0-3-8-7-8s-4 8-7 8c-3 0-4-7-6-13-2-5-4-14 1-17z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6fbfa;--ink:#0b2a2a;--teal:#0f766e;--mint:#ccfbf1;--soft:#ecfdf9;--muted:#557371;--line:#d5ebe7;--navy:#0b2a2a;--sans:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,p{margin:0}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer;color:inherit}
+  :focus-visible{outline:3px solid #2dd4bf;outline-offset:2px;border-radius:8px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  .demo-bar{background:#062221;color:#c7ece7;font-size:13px;text-align:center;padding:8px 12px}
+  .demo-bar a{color:#5eead4;font-weight:700}
+  header .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;text-decoration:none}
+  .logo i{width:38px;height:38px;border-radius:50%;background:var(--teal);display:grid;place-items:center;font-style:normal;color:#fff}
+  .nav nav{display:none;gap:22px;font-weight:600;font-size:15px}
+  .nav nav a{text-decoration:none}
+  @media(min-width:760px){.nav nav{display:flex}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font-weight:700;text-decoration:none;background:var(--teal);color:#fff;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+
+  .hero{display:grid;gap:26px;padding:26px 0 40px;align-items:center}
+  @media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr;padding:46px 0 60px}}
+  .pill{display:inline-flex;gap:8px;align-items:center;background:var(--mint);color:var(--teal);font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px}
+  .hero h1{font-size:clamp(38px,6.4vw,62px);line-height:1.03;font-weight:800;letter-spacing:-.03em;margin-top:14px}
+  .hero h1 span{color:var(--teal)}
+  .hero p{color:var(--muted);font-size:18px;margin-top:14px;max-width:44ch}
+  .hero .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .trust{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px;font-size:14px;color:var(--muted)}
+  .trust b{color:var(--ink)}
+  .art{position:relative;aspect-ratio:1;max-width:420px;width:100%;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#ccfbf1 55%,#99f6e4);display:grid;place-items:center}
+  .tooth{width:52%;filter:drop-shadow(0 24px 30px rgba(15,118,110,.25));animation:bob 5s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-10px)}}
+  .tag{position:absolute;background:#fff;border-radius:16px;padding:10px 14px;font-size:13px;font-weight:700;box-shadow:0 14px 30px -14px rgba(11,42,42,.35)}
+  .tag small{display:block;color:var(--muted);font-weight:500}
+
+  section{padding:56px 0 0}
+  .h2{font-size:clamp(28px,4.4vw,40px);font-weight:800;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:6px}
+  .svcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+  @media(min-width:860px){.svcs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .svc{position:relative;display:block;background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:16px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .svc input{position:absolute;opacity:0}
+  .svc .ic{font-size:24px}
+  .svc h3{font-size:16px;margin-top:6px}
+  .svc p{font-size:13px;color:var(--muted)}
+  .svc b{display:block;margin-top:8px;color:var(--teal)}
+  .svc:has(input:checked){border-color:var(--teal);box-shadow:0 0 0 3px var(--mint)}
+  .svc:has(input:focus-visible){outline:3px solid #2dd4bf;outline-offset:2px}
+
+  .docs{display:grid;gap:12px;margin-top:14px}
+  @media(min-width:700px){.docs{grid-template-columns:repeat(3,1fr)}}
+  .doc{position:relative;display:flex;gap:12px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:14px;cursor:pointer}
+  .doc input{position:absolute;opacity:0}
+  .av{width:50px;height:50px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:800;color:#fff}
+  .doc b{display:block;font-size:15px}
+  .doc small{color:var(--muted);font-size:13px}
+  .doc:has(input:checked){border-color:var(--teal);box-shadow:0 0 0 3px var(--mint)}
+  .doc:has(input:focus-visible){outline:3px solid #2dd4bf;outline-offset:2px}
+
+  .bk{display:grid;gap:16px;margin-top:20px}
+  @media(min-width:920px){.bk{grid-template-columns:1.35fr .85fr;align-items:start}}
+  .bk>*{min-width:0}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;min-width:0}
+  .panel h3{font-size:16px;margin-bottom:12px}
+  .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+  .day,.slot{border:1px solid var(--line);background:#fff;border-radius:14px}
+  .day{flex:none;width:66px;padding:9px 0;text-align:center}
+  .day small{display:block;color:var(--muted);font-size:12px}
+  .day b{font-size:20px}
+  .day:disabled{opacity:.35;cursor:not-allowed}
+  .day[aria-pressed="true"],.slot[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+  .day[aria-pressed="true"] small{color:#ccfbf1}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  @media(min-width:600px){.slots{grid-template-columns:repeat(4,1fr)}}
+  .slot{padding:10px 0;font-weight:600;font-size:14px}
+  .slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  .row2{display:grid;gap:12px}
+  @media(min-width:600px){.row2{grid-template-columns:1fr 1fr}}
+  .field{display:grid;gap:5px;font-weight:600;font-size:14px}
+  .field input,.field select,.field textarea{font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  .field textarea{resize:vertical;min-height:70px}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal)}
+  .seg{display:flex;gap:8px}
+  .seg label{flex:1;display:flex;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;font-weight:600;font-size:14px}
+  .seg input{accent-color:var(--teal)}
+  .seg label:has(input:checked){border-color:var(--teal);background:var(--soft)}
+  .sum{background:var(--navy);color:#cfe9e5;border-radius:22px;padding:22px;position:sticky;top:16px}
+  .sum h3{color:#fff;font-size:20px}
+  .sum dl{display:grid;gap:10px;margin:16px 0}
+  .sum dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7fb5ae}
+  .sum dd{margin:2px 0 0;color:#fff;font-weight:600}
+  .sum .btn{width:100%;background:#5eead4;color:var(--ink)}
+  .err{color:#fca5a5;font-size:13px;margin-top:8px;min-height:1em}
+
+  .faq{display:grid;gap:10px;margin-top:20px}
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+  summary{font-weight:700;cursor:pointer}
+  details p{color:var(--muted);margin-top:8px;font-size:15px}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding:50px 16px 40px}
+  .modal{position:fixed;inset:0;z-index:40;display:none;place-items:center;background:rgba(6,34,33,.55);padding:16px}
+  .modal.show{display:grid}
+  .appt{background:#fff;border-radius:24px;max-width:400px;width:100%;overflow:hidden}
+  .appt .top{background:var(--teal);color:#fff;padding:22px;text-align:center}
+  .appt .top h2{font-size:26px}
+  .appt .body{padding:18px 22px;display:grid;gap:8px;font-size:14px}
+  .appt .body div{display:flex;justify-content:space-between;gap:10px}
+  .appt .body span{color:var(--muted)}
+  .appt .bottom{padding:0 22px 22px}
+  .appt .bottom p{font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px}
+  .appt .btn{width:100%}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar">This is a <b>demo website</b> made by BlackGate. The clinic and dentists are fictional and appointments are not real. <a href="https://blackgate-p6k1.onrender.com/">Get one for your business →</a></div>
+<header><div class="wrap nav"><a class="logo" href="#top"><i aria-hidden="true">✦</i>Ngiti Dental</a><nav aria-label="Main"><a href="#services">Services</a><a href="#book">Book</a><a href="#faq">FAQ</a></nav><a class="btn" href="#book">Book now</a></div></header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <span class="pill">🦷 Gentle care for the whole family</span>
+      <h1>A healthier smile, <span>booked online.</span></h1>
+      <p>Choose your dentist, pick a time that works for you, and skip the waiting room. Walk-ins welcome too.</p>
+      <div class="acts"><a class="btn" href="#book">Book an appointment</a><a class="btn light" href="#services">Our services</a></div>
+      <div class="trust"><span><b>Mon–Sat</b> 9 AM – 6 PM</span><span><b>HMO</b> accepted</span><span><b>3</b> dentists</span></div>
+    </div>
+    <div class="art" aria-hidden="true">
+      <svg class="tooth" viewBox="0 0 100 100"><path d="M24 14c9-6 17 0 26 0s17-6 26 0c10 7 6 26 2 36-4 12-6 34-14 34-7 0-6-20-14-20s-7 20-14 20c-8 0-10-22-14-34-4-10-8-29 2-36z" fill="#fff" stroke="#99f6e4" stroke-width="2"/><path d="M36 30c4-3 8-2 10 0" stroke="#5eead4" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+      <div class="tag" style="left:-4%;top:18%">⭐ Painless cleaning<small>30–45 minutes</small></div>
+      <div class="tag" style="right:-4%;bottom:16%">📅 Next opening<small id="next-open">Today</small></div>
+    </div>
+  </div>
+
+  <form id="form" novalidate>
+    <section id="services" style="padding-top:20px">
+      <h2 class="h2">1 · Choose a service</h2>
+      <p class="sub">Prices are starting rates. The dentist confirms after checking.</p>
+      <div class="svcs" id="svcs" role="radiogroup" aria-label="Service"></div>
+    </section>
+
+    <section id="book">
+      <h2 class="h2">2 · Pick your dentist and time</h2>
+      <div class="docs" id="docs" role="radiogroup" aria-label="Dentist"></div>
+      <div class="bk">
+        <div style="display:grid;gap:14px">
+          <div class="panel">
+            <h3>Date</h3>
+            <div class="days" id="days" role="group" aria-label="Date"></div>
+            <h3 style="margin-top:16px">Time</h3>
+            <div class="slots" id="slots" role="group" aria-label="Time"></div>
+            <p class="note" id="sched-note"></p>
+          </div>
+          <div class="panel">
+            <h3>3 · Patient details</h3>
+            <div class="row2">
+              <label class="field">Full name<input name="name" autocomplete="name" required></label>
+              <label class="field">Messenger or email<input name="contact" required></label>
+            </div>
+            <div class="seg" role="radiogroup" aria-label="Patient type" style="margin-top:12px">
+              <label><input type="radio" name="ptype" value="New patient" checked> New patient</label>
+              <label><input type="radio" name="ptype" value="Returning patient"> Returning</label>
+            </div>
+            <label class="field" style="margin-top:12px">Any concerns? (optional)<textarea name="notes" placeholder="e.g. tooth sensitive to cold"></textarea></label>
+          </div>
+        </div>
+        <aside class="sum" aria-live="polite">
+          <h3>Your appointment</h3>
+          <dl>
+            <div><dt>Service</dt><dd id="s1">Choose a service</dd></div>
+            <div><dt>Dentist</dt><dd id="s2">Choose a dentist</dd></div>
+            <div><dt>When</dt><dd id="s3">Pick a date and time</dd></div>
+            <div><dt>Starts at</dt><dd id="s4">—</dd></div>
+          </dl>
+          <button class="btn" type="submit">Confirm appointment</button>
+          <p class="err" id="err"></p>
+        </aside>
+      </div>
+    </section>
+  </form>
+
+  <section id="faq">
+    <h2 class="h2">Questions</h2>
+    <div class="faq">
+      <details><summary>Do you accept HMO?</summary><p>Yes. Bring your HMO card and a valid ID on your visit.</p></details>
+      <details><summary>Can I bring my kids?</summary><p>Of course. Dr. Lim sees kids aged 3 and up.</p></details>
+      <details><summary>What if I need to reschedule?</summary><p>Message us at least 3 hours before your time and we'll move it for free.</p></details>
+    </div>
+  </section>
+</main>
+<footer>© Ngiti Dental Clinic (demo) · Website by <a href="https://blackgate-p6k1.onrender.com/">BlackGate</a></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="a-title">
+  <div class="appt"><div class="top"><h2 id="a-title">See you soon! 😁</h2></div><div class="body" id="a-body"></div><div class="bottom"><p>On a real site, the clinic gets this right away and sends you a reminder.</p><button class="btn" id="a-close">Done</button></div></div>
+</div>
+
+<script>
+(function(){
+  var SVCS=[['🪥','Cleaning','Oral prophylaxis','45 min',800],['🔍','Check-up','Exam and advice','30 min',500],['🦷','Filling','Per tooth','1 hr',1000],['😬','Extraction','Simple pull','45 min',1200],['✨','Whitening','In-clinic session','1.5 hrs',6000],['🧩','Braces consult','Plan and quote','45 min',700]];
+  var DOCS=[{n:'Dr. Ana Santos',r:'General dentist',c:'#0f766e',off:[]},{n:'Dr. Paolo Cruz',r:'Braces & whitening',c:'#2563eb',off:[2,4]},{n:'Dr. Mia Lim',r:'Kids dentist',c:'#db2777',off:[1,3,5]}];
+  var peso=function(n){return '₱'+n.toLocaleString('en-PH')};
+  document.getElementById('svcs').innerHTML=SVCS.map(function(s,i){return '<label class="svc"><input type="radio" name="svc" value="'+i+'"><span class="ic" aria-hidden="true">'+s[0]+'</span><h3>'+s[1]+'</h3><p>'+s[2]+' · '+s[3]+'</p><b>from '+peso(s[4])+'</b></label>'}).join('');
+  document.getElementById('docs').innerHTML=DOCS.map(function(d,i){var ini=d.n.replace('Dr. ','').split(' ').map(function(x){return x[0]}).join('');return '<label class="doc"><input type="radio" name="doc" value="'+i+'"'+(i===0?' checked':'')+'><span class="av" style="background:'+d.c+'" aria-hidden="true">'+ini+'</span><span><b>'+d.n+'</b><small>'+d.r+'</small></span></label>'}).join('');
+  var state={day:null,time:null},form=document.getElementById('form'),days=document.getElementById('days'),slots=document.getElementById('slots');
+  var TIMES=['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+  function doc(){return DOCS[+form.doc.value]}
+  function drawDays(){
+    var h='',d0=new Date();
+    for(var i=0;i<12;i++){var d=new Date(d0);d.setDate(d0.getDate()+i);var dow=d.getDay(),closed=dow===0||doc().off.indexOf(dow)>-1,key=d.toDateString(),lab=d.toLocaleDateString('en-PH',{weekday:'long',month:'long',day:'numeric'});
+      h+='<button type="button" class="day" data-k="'+key+'" data-l="'+lab+'" aria-pressed="'+(state.day===key)+'" '+(closed?'disabled aria-label="'+lab+', not available"':'aria-label="'+lab+'"')+'><small>'+(i===0?'Today':d.toLocaleDateString('en-PH',{weekday:'short'}))+'</small><b>'+d.getDate()+'</b><small>'+d.toLocaleDateString('en-PH',{month:'short'})+'</small></button>'}
+    days.innerHTML=h;
+    var offs=doc().off.map(function(x){return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][x]});
+    document.getElementById('sched-note').textContent=doc().n+' is in '+(offs.length?'every day except Sunday, '+offs.join(' and '):'Monday to Saturday')+'.';
+  }
+  function drawSlots(){
+    if(!state.day){slots.innerHTML='<p class="note" style="grid-column:1/-1;margin:0">Pick a date first.</p>';return}
+    var seed=state.day.length+(+form.doc.value)*3;
+    slots.innerHTML=TIMES.map(function(t,i){var taken=(i*5+seed)%4===0;return '<button type="button" class="slot" aria-pressed="'+(state.time===t)+'" '+(taken?'disabled aria-label="'+t+', taken"':'')+'>'+t+'</button>'}).join('');
+  }
+  function sum(){
+    var s=form.svc.value!==''?SVCS[+form.svc.value]:null;
+    document.getElementById('s1').textContent=s?s[1]+' · '+s[3]:'Choose a service';
+    document.getElementById('s2').textContent=doc().n;
+    var dl=state.day?days.querySelector('[data-k="'+state.day+'"]'):null;
+    document.getElementById('s3').textContent=dl?dl.dataset.l+(state.time?' · '+state.time:' · pick a time'):'Pick a date and time';
+    document.getElementById('s4').textContent=s?peso(s[4]):'—';
+  }
+  days.addEventListener('click',function(e){var b=e.target.closest('.day');if(!b||b.disabled)return;state.day=b.dataset.k;state.time=null;drawDays();drawSlots();sum()});
+  slots.addEventListener('click',function(e){var b=e.target.closest('.slot');if(!b||b.disabled)return;state.time=b.textContent;drawSlots();sum()});
+  form.addEventListener('change',function(e){if(e.target.name==='doc'){state.day=null;state.time=null;drawDays();drawSlots()}sum()});
+  drawDays();drawSlots();sum();
+  var first=days.querySelector('.day:not(:disabled)');document.getElementById('next-open').textContent=first?first.dataset.l:'Soon';
+  var err=document.getElementById('err'),modal=document.getElementById('modal');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.svc.value===''){err.textContent='Please choose a service.';return}
+    if(!state.day||!state.time){err.textContent='Please pick a date and time.';return}
+    if(!form.name.value.trim()){err.textContent='Please enter the patient name.';form.name.focus();return}
+    if(!form.contact.value.trim()){err.textContent='Please add your Messenger or email.';form.contact.focus();return}
+    err.textContent='';var s=SVCS[+form.svc.value],body=document.getElementById('a-body');body.innerHTML='';
+    [['Patient',form.name.value.trim()+' ('+form.ptype.value+')'],['Service',s[1]],['Dentist',doc().n],['Date',days.querySelector('[data-k="'+state.day+'"]').dataset.l],['Time',state.time],['Starts at',peso(s[4])]].forEach(function(p){var d=document.createElement('div'),a=document.createElement('span'),b=document.createElement('b');a.textContent=p[0];b.textContent=p[1];d.appendChild(a);d.appendChild(b);body.appendChild(d)});
+    modal.classList.add('show');document.getElementById('a-close').focus();
+  });
+  document.getElementById('a-close').addEventListener('click',function(){modal.classList.remove('show')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')modal.classList.remove('show')});
+})();
+</script>
+</body>
+</html>
